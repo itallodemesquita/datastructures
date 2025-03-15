@@ -1,0 +1,3 @@
+A leitura de arquivos pode ser realizada por caractere;
+Por palavras;
+Ou por linhas.
