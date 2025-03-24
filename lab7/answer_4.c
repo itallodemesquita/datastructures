@@ -39,11 +39,16 @@ void addTitulo(TitleList *list, char *nome, int ano_lancamento, char *categoria)
 
 // Pesquisa por categoria
 void pesquisaPorCategoria(TitleList *list, char *categoria) {
-    printf("Titulos na categoria: '%s':\n", categoria);
+    int encontrado = 0;
+    printf("Títulos na categoria: '%s':\n", categoria);
     for (int i = 0; i < list->size; i++) {
         if (strcmp(list->titles[i].categoria, categoria) == 0) {
             printf("%s (%d)\n", list->titles[i].nome, list->titles[i].ano_lancamento);
+            encontrado = 1;
         }
+    }
+    if (!encontrado) {
+        printf("Nenhum título encontrado nesta categoria.\n");
     }
 }
 

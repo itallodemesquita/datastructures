@@ -13,6 +13,11 @@ typedef struct Node {
 // Função para criar um novo nó
 Node* criar_no(int valor) {
     Node* novo_no = (Node*)malloc(sizeof(Node));
+    if (novo_no == NULL) {
+        printf("Erro de alocação de memória\n");
+        exit(1);
+    }
+    
     novo_no->valor = valor;
     novo_no->proximo = NULL;
     return novo_no;

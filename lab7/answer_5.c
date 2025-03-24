@@ -84,44 +84,36 @@ void exibirPlaylist(Playlist* playlist) {
 // Função para reorganizar a playlist
 void reorganizarPlaylist(Playlist* playlist, int posicaoAtual, int novaPosicao) {
     if (playlist->atual == NULL || posicaoAtual == novaPosicao) return;
-
+    
     Musica* temp = playlist->atual;
-    Musica* musicaMover = NULL;
     int contador = 0;
-
-    // Encontrar a música na posição atual
-    do {
-        if (contador == posicaoAtual) {
-            musicaMover = temp;
-            break;
-        }
+    
+    while (contador < posicaoAtual && temp->prox != playlist->atual) {
         temp = temp->prox;
         contador++;
-    } while (temp != playlist->atual);
+    }
+    
+    if (contador != posicaoAtual) return; // Posição inválida
 
-    if (musicaMover == NULL) return;
-
-    // Remover a música da posição atual
-    musicaMover->ant->prox = musicaMover->prox;
-    musicaMover->prox->ant = musicaMover->ant;
-
-    // Inserir a música na nova posição
-    temp = playlist->atual;
+    // Remove temporariamente
+    temp->ant->prox = temp->prox;
+    temp->prox->ant = temp->ant;
+    
+    // Insere na nova posição
+    Musica* destino = playlist->atual;
     contador = 0;
-    do {
-        if (contador == novaPosicao) {
-            musicaMover->prox = temp;
-            musicaMover->ant = temp->ant;
-            temp->ant->prox = musicaMover;
-            temp->ant = musicaMover;
-            if (novaPosicao == 0) {
-                playlist->atual = musicaMover;
-            }
-            return;
-        }
-        temp = temp->prox;
+    while (contador < novaPosicao && destino->prox != playlist->atual) {
+        destino = destino->prox;
         contador++;
-    } while (temp != playlist->atual);
+    }
+    
+    temp->prox = destino;
+    temp->ant = destino->ant;
+    destino->ant->prox = temp;
+    destino->ant = temp;
+    if (novaPosicao == 0) {
+        playlist->atual = temp;
+    }
 }
 
 // Função principal para testar a playlist

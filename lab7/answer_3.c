@@ -54,6 +54,13 @@ void remover_circular(Node** cabeca, int valor) {
     Node* temp = *cabeca;
     Node* anterior = NULL;
 
+    // Caso haja apenas um elemento
+    if (temp->proximo == *cabeca && temp->valor == valor) {
+        free(temp);
+        *cabeca = NULL;
+        return;
+    }
+    
     // Se o nó a ser removido é a cabeça da lista
     if (temp->valor == valor) {
         if (temp->proximo == *cabeca) {
